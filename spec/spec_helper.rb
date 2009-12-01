@@ -9,6 +9,8 @@ Dir[File.join(File.dirname(__FILE__), 'support', '*.rb')].each do |file|
   require file
 end
 
+FileUtils.rm_rf File.expand_path('../../tmp', __FILE__)
+
 Spec::Runner.configure do |config|
   config.include Spec::Builders
   config.include Spec::Matchers

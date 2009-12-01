@@ -8,10 +8,6 @@ module Spec
       root.join("tmp", *path).expand_path
     end
 
-    # def tmp_dir
-    #   this_file.join("..", "tmp")
-    # end
-
     def bundled_app(*path)
       tmp_path.join("bundled_app").join(*path)
     end
@@ -24,10 +20,6 @@ module Spec
       bundled_app("bin").join(*path)
     end
 
-    # def tmp_file(*path)
-    #   tmp_dir.join(*path)
-    # end
-
     def cache_path(*path)
       bundled_app.join("cache", *path)
     end
@@ -36,12 +28,8 @@ module Spec
       cache_path.join("#{gem_name}.gem")
     end
 
-    def fixture_dir
-      root.join("spec", "fixtures")
-    end
-
     def gem_repo1(*path)
-      fixture_dir.join("repository1", *path).expand_path
+      tmp_path("repos/1")
     end
 
     def gem_repo2(*path)

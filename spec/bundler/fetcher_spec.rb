@@ -1,10 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe "Fetcher" do
-  before(:each) do
-    @source = Bundler::GemSource.new(:uri => "file://#{gem_repo1}")
-    @other  = Bundler::GemSource.new(:uri => "file://#{gem_repo2}")
-  end
 
   it "raises if the source does not exist" do
     m = build_manifest <<-Gemfile
