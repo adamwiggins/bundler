@@ -9,7 +9,9 @@ Dir[File.join(File.dirname(__FILE__), 'support', '*.rb')].each do |file|
   require file
 end
 
-FileUtils.rm_rf File.expand_path('../../tmp', __FILE__)
+Dir["#{File.expand_path('../../tmp', __FILE__)}/*"].each do |file|
+  FileUtils.rm_rf file
+end
 
 Spec::Runner.configure do |config|
   config.include Spec::Builders
