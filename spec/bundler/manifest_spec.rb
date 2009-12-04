@@ -2,10 +2,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe "Bundler::Environment" do
 
-  before :each do
-    build_repo1
-  end
-
   describe "Manifest with dependencies" do
 
     before :each do

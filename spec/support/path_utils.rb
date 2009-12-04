@@ -51,5 +51,11 @@ module Spec
     def copy(gem_name)
       FileUtils.cp(fixture(gem_name), File.join(tmp_dir, 'cache'))
     end
+
+    def app_root
+      Dir.chdir bundled_app do
+        yield
+      end
+    end
   end
 end

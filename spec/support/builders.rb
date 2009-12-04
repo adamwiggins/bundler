@@ -3,7 +3,9 @@ module Spec
 
     def build_repo1
       build_repo gem_repo1 do
-        build_gem "rake",           "0.8.7"
+        build_gem "rake",           "0.8.7" do |s|
+          s.executables = "rake"
+        end
         build_gem "rack",           %w(0.9.1 1.0.0) do |s|
           s.executables = "rackup"
         end
@@ -28,6 +30,31 @@ module Spec
           s.add_dependency "activesupport", "2.3.2"
         end
         build_gem "activesupport",  "2.3.2"
+
+        build_gem "missing_dep" do |s|
+          s.add_dependency "not_here"
+        end
+
+        build_gem "very_simple_binary" do |s|
+          s.require_paths << 'ext'
+          s.extensions << "ext/extconf.rb"
+          s.write "ext/extconf.rb", <<-RUBY
+            require "mkmf"
+
+            exit 1 unless with_config("simple")
+
+            extension_name = "very_simple_binary"
+            dir_config extension_name
+            create_makefile extension_name
+          RUBY
+          s.write "ext/very_simple_binary.c", <<-C
+            #include "ruby.h"
+
+            void Init_very_simple_binary() {
+              rb_define_module("VerySimpleBinaryInC");
+            }
+          C
+        end
       end
     end
 
@@ -140,7 +167,7 @@ module Spec
 
       def executables=(val)
         Array(val).each do |file|
-          write "bin/#{file}", "require '#{@name}'"
+          write "bin/#{file}", "require '#{@name}' ; puts #{@name.upcase}"
         end
         @spec.executables = Array(val)
       end
